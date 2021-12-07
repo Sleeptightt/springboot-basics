@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
+<title>Business Entity Addresses</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+	integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="../css/shards.min.css">
+</head>
+<body>
+	<div th:switch="${benaddrs.isEmpty()}" class="container my-5">
+		<div class="row">
+			<div class="col-md-10">
+				<h2 th:case="true">No business entity address has been registered yet!</h2>
+				<div th:case="false">
+					<h2 class="my-5">Business entity addresses</h2>
+					<table class="table table-striped table-responsive-md">
+						<thead>
+							<tr>
+								<th>Address</th>
+								<th>Address Type</th>
+								<th>Business Entity</th>
+								<th>Edit</th>
+								<th>Delete</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="benaddr : ${benaddrs}">
+								<td><a th:text="${benaddr.address.addressline1}" th:href="@{/addr/?id={id}(id=${benaddr.address.addressid})}"></a></td>
+								<td><a th:text="${benaddr.addresstype.name}" th:href="@{/addrtype/?id={id}(id=${benaddr.addresstype.addresstypeid})}"></a></td>
+								<td><a th:text="${benaddr.businessentity.businessentityid}" th:href="@{/ben/?id={id}(id=${benaddr.businessentity.businessentityid})}"></a></td>
+								<td><a th:href="@{/benaddr/edit/{id1}&{id2}&{id3}(id1=${benaddr.id.addressid},id2=${benaddr.id.addresstypeid}, id3=${benaddr.id.businessentityid})}"
+									class="btn btn-primary"><i class="fas fa-calendar ml-2"></i></a></td>
+								<td><a th:href="@{/benaddr/del/{id1}&{id2}&{id3}(id1=${benaddr.id.addressid},id2=${benaddr.id.addresstypeid}, id3=${benaddr.id.businessentityid})}"
+									class="btn btn-primary"><i class="fas fa-calendar-times ml-2"></i></a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<p class="my-5">
+					<a href="/benaddr/add" class="btn btn-primary"><i
+						class="fas fa-calendar-plus ml-2"></i></a>
+				</p>
+				
+			</div>
+		</div>
+		<p>
+			<a href="/"><i class="fas fa-home ml-2"></i> Go back to main</a>
+		</p>
+	</div>
+</body>
+</html>

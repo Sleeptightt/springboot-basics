@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Update Business Entity Phone Numbers</title>
+  <link
+          rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous"
+  />
+  <link
+          rel="stylesheet"
+          href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+          integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+          crossorigin="anonymous"
+  />
+  <link rel="stylesheet" href="../css/shards.min.css" />
+</head>
+
+<body>
+<form
+        class="container my-5"
+        method="POST"
+        action="#"
+        th:action="@{/benphone/edit/{id1}&{id2}(id1=${benphone.id.businessentityid},id2=${benphone.id.phonenumbertypeid})}"
+        th:object="${benphone}"
+>
+  <h1>Fill in the details of the business entity phone number</h1>
+  
+  <section class="person">
+    <span>Person/Business Entity: </span>
+    <select th:field="*{person}">
+      <option
+              th:each="person : ${persons}"
+              th:value="${person.businessentityid}"
+              th:text="${person.firstname}"
+              th:attrappend="selected=${benphone.person != null and benphone.person.businessentityid == person.businessentityid}?'selected'"
+      ></option>
+    </select>
+    <span th:if="${#fields.hasErrors('person')}" th:errors="*{person}" class="text-danger"></span>
+  <br>
+  </section>
+  
+  <section class="phonenumbertype">
+    <span>Phone Number Type: </span>
+    <select th:field="*{phonenumbertype}">
+      <option
+              th:each="phonetype : ${phonetypes}"
+              th:value="${phonetype.phonenumbertypeid}"
+              th:text="${phonetype.name}"
+              th:attrappend="selected=${benphone.phonenumbertype != null and benphone.phonenumbertype.phonenumbertypeid == phonetype.phonenumbertypeid}?'selected'"
+      ></option>
+    </select>
+    <span th:if="${#fields.hasErrors('phonenumbertype')}" th:errors="*{phonenumbertype}" class="text-danger"></span>
+  <br>
+  </section>
+  
+  <div class="row">
+    <div class="col-md-4 mt-3">
+      <input type="submit" name="action" class="btn btn-primary" value="Update">
+    </div>
+    <div class="col-md-3 mt-3">
+      <input type="submit" name="action" class="btn btn-secondary" value="Cancel">
+    </div>
+  </div>
+</form>
+</body>
+</html>

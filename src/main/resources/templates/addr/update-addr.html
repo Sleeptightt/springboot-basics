@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Update Address</title>
+  <link
+          rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous"
+  />
+  <link
+          rel="stylesheet"
+          href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+          integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+          crossorigin="anonymous"
+  />
+  <link rel="stylesheet" href="../css/shards.min.css" />
+</head>
+
+<body>
+<form
+        class="container my-5"
+        method="POST"
+        action="#"
+        th:action="@{/addr/edit/{id}(id=${addr.addressid})}"
+        th:object="${addr}"
+>
+  <h1>Fill in the details of the address</h1>
+  <input type="text" name="addressid" th:field="*{addressid}" id="addressid" th:value="${addr.addressid}" hidden>
+   <label for="addressline1">Address Line 1: </label>
+  <input type="text" name="addressline1" id="addressline1" class="form-control" th:value="${addr.addressline1}" />
+  <span th:if="${#fields.hasErrors('addressline1')}" th:errors="*{addressline1}" class="text-danger"></span>
+  <br>
+  <label for="addressline2">Address Line 2: </label>
+  <input type="text" name="addressline2" id="addressline1" class="form-control" th:value="${addr.addressline2}" />
+  <span th:if="${#fields.hasErrors('addressline2')}" th:errors="*{addressline2}" class="text-danger"></span>
+  <br>
+  <label for="city">City: </label>
+  <input type="text" name="city" id="city" class="form-control" th:value="${addr.city}" />
+  <span th:if="${#fields.hasErrors('city')}" th:errors="*{city}" class="text-danger"></span>
+  <br>
+  <label for="postalcode">Postal Code: </label>
+  <input type="text" name="postalcode" id="postalcode" class="form-control" th:value="${addr.postalcode}" />
+  <span th:if="${#fields.hasErrors('postalcode')}" th:errors="*{postalcode}" class="text-danger"></span>
+  <br>
+  <section class="stateprovince">
+    <span>State Province: </span>
+    <select th:field="*{stateprovince}">
+      <option
+              th:each="stateprovince : ${stprovs}"
+              th:value="${stateprovince.stateprovinceid}"
+              th:text="${stateprovince.name}"
+              th:attrappend="selected=${addr.stateprovince != null and addr.stateprovince.stateprovinceid == stateprovince.stateprovinceid}?'selected'"
+      ></option>
+    </select>
+    <span th:if="${#fields.hasErrors('stateprovince')}" th:errors="*{stateprovince}" class="text-danger"></span>
+  <br>
+  </section>
+  <div class="row">
+    <div class="col-md-4 mt-3">
+      <input type="submit" name="action" class="btn btn-primary" value="Update">
+    </div>
+    <div class="col-md-3 mt-3">
+      <input type="submit" name="action" class="btn btn-secondary" value="Cancel">
+    </div>
+  </div>
+</form>
+</body>
+</html>
