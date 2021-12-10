@@ -88,9 +88,9 @@ public class AddressDao implements Dao<Address,Integer>{
 		return query.getResultList();
 	}
 	
-	public List<Address> findAllByStateprovince(Stateprovince stateProvince){
+	public List<Address> findAllByStateprovince(Integer stateprovince){
 		Query query = entityManager.createQuery("SELECT a FROM Address a WHERE a.stateprovince.stateprovinceid = :stprovId");
-		query.setParameter("stprovId", stateProvince.getStateprovinceid());
+		query.setParameter("stprovId", stateprovince);
 		return query.getResultList();
 	}
 }

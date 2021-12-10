@@ -1,5 +1,6 @@
 package com.example.demo.front.businessdelegate.interfaces;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.web.client.RestTemplate;
@@ -21,4 +22,14 @@ public interface BusinessDelegate {
     Person savePerson(Person person);
     void editPerson(Person person);
 	
+    
+    //ADDRESS
+	
+    List<Address> findAllAddressByModifiedDate(Timestamp modifieddate);
+    List<Address> findAllAddressByStateProvince(Integer stateprovince);
+    List<Address> findAllAddresses();
+    Address findAddressById(Integer id);
+    void deleteAddress(Address addr);
+    Address saveAddress(Address addr);
+    void editAddress(Address addr);
 }

@@ -80,7 +80,7 @@ public class AddressServiceImpl implements AddressService{
 
 	@Override
 	public Iterable<Address> findAllByStateprovince(Stateprovince stateProvince) {
-		return addressDao.findAllByStateprovince(stateProvince);
+		return addressDao.findAllByStateprovince(stateProvince.getStateprovinceid());
 	}
 
 }
