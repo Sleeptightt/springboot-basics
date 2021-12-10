@@ -29,7 +29,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -38,12 +37,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.transaction.TransactionSystemException;
 
-import com.example.demo.daos.PersonDao;
-import com.example.demo.model.person.Businessentity;
-import com.example.demo.model.person.Person;
-import com.example.demo.repository.BusinessEntityRepository;
-import com.example.demo.service.BusinessEntityServiceImpl;
-import com.example.demo.service.PersonServiceImpl;
+import com.example.demo.back.daos.PersonDao;
+import com.example.demo.front.model.person.Businessentity;
+import com.example.demo.front.model.person.Person;
+import com.example.demo.back.service.BusinessEntityServiceImpl;
 
 import lombok.extern.java.Log;
 

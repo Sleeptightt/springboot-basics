@@ -10,21 +10,19 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 
-import com.example.demo.model.person.Address;
-import com.example.demo.model.person.Addresstype;
-import com.example.demo.model.person.Businessentity;
-import com.example.demo.model.person.Person;
-import com.example.demo.model.person.Phonenumbertype;
-import com.example.demo.model.person.Stateprovince;
-import com.example.demo.model.person.UserApp;
-import com.example.demo.model.person.UserType;
-import com.example.demo.service.interfaces.AddressService;
-import com.example.demo.service.interfaces.AddressTypeService;
-import com.example.demo.service.interfaces.BusinessEntityService;
-import com.example.demo.service.interfaces.PersonService;
-import com.example.demo.service.interfaces.PhoneNumberTypeService;
-import com.example.demo.service.interfaces.StateProvinceService;
-import com.example.demo.service.interfaces.UserService;
+import com.example.demo.front.model.person.Address;
+import com.example.demo.front.model.person.Addresstype;
+import com.example.demo.front.model.person.Phonenumbertype;
+import com.example.demo.front.model.person.Stateprovince;
+import com.example.demo.front.model.person.UserApp;
+import com.example.demo.front.model.person.UserType;
+import com.example.demo.back.service.interfaces.AddressService;
+import com.example.demo.back.service.interfaces.AddressTypeService;
+import com.example.demo.back.service.interfaces.BusinessEntityService;
+import com.example.demo.back.service.interfaces.PersonService;
+import com.example.demo.back.service.interfaces.PhoneNumberTypeService;
+import com.example.demo.back.service.interfaces.StateProvinceService;
+import com.example.demo.back.service.interfaces.UserService;
 
 import lombok.extern.java.Log;
 

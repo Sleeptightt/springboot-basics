@@ -28,7 +28,6 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -37,15 +36,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.transaction.TransactionSystemException;
 
-import com.example.demo.daos.AddressDao;
-import com.example.demo.model.person.Address;
-import com.example.demo.model.person.Businessentity;
-import com.example.demo.model.person.Person;
-import com.example.demo.model.person.Stateprovince;
-import com.example.demo.repository.BusinessEntityRepository;
-import com.example.demo.repository.StateProvinceRepository;
-import com.example.demo.service.AddressServiceImpl;
-import com.example.demo.service.StateProvinceServiceImpl;
+import com.example.demo.back.daos.AddressDao;
+import com.example.demo.front.model.person.Address;
+import com.example.demo.front.model.person.Stateprovince;
+import com.example.demo.back.service.StateProvinceServiceImpl;
 
 import lombok.extern.java.Log;
 
