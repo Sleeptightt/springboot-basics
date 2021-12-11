@@ -153,7 +153,7 @@ public class PersonPhoneDaoTest {
 		List<Personphone> phones = personPhoneDao.getAll();
 		
 		assertTrue(phones.size() == 1);
-		assertTrue(personPhoneDao.findAllByPhonenumbertype(phonetype).size() == 1);
+		assertTrue(personPhoneDao.findAllByPhonenumbertype(phonetype.getPhonenumbertypeid()).size() == 1);
 		//assertTrue(personPhoneDao.findAllByPhonenumberLike("312").size() == 0);
 		
 		Personphone myphone = phones.get(0);
@@ -182,7 +182,7 @@ public class PersonPhoneDaoTest {
 		List<Personphone> phones = personPhoneDao.getAll();
 		
 		assertTrue(phones.size() == 2);
-		assertTrue(personPhoneDao.findAllByPhonenumbertype(phonetype).size() == 1);
+		assertTrue(personPhoneDao.findAllByPhonenumbertype(phonetype.getPhonenumbertypeid()).size() == 1);
 		//assertTrue(personPhoneDao.findAllByPhonenumberLike("312").size() == 2);
 		
 		Personphone myphone = phones.get(1);
@@ -204,7 +204,7 @@ public class PersonPhoneDaoTest {
 		List<Personphone> phones = personPhoneDao.getAll();
 		
 		assertTrue(phones.size() == 3);
-		assertTrue(personPhoneDao.findAllByPhonenumbertype(phonetype).size() == 1);
+		assertTrue(personPhoneDao.findAllByPhonenumbertype(phonetype.getPhonenumbertypeid()).size() == 1);
 		//assertTrue(personPhoneDao.findAllByPhonenumberLike("312").size() == 4);
 		
 	}

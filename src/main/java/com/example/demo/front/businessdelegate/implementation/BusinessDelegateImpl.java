@@ -17,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.example.demo.front.businessdelegate.interfaces.BusinessDelegate;
 import com.example.demo.front.model.person.Address;
+import com.example.demo.front.model.person.Businessentity;
 import com.example.demo.front.model.person.Person;
 import com.example.demo.front.model.person.Personphone;
 import com.example.demo.front.model.person.PersonphonePK;
@@ -26,6 +27,7 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 
 	private final static String URL = "http://localhost:8080/api";
 
+	private final static String BEN_URL = URL + "/ben/";
 	private final static String ADDR_URL = URL + "/addr/";
     private final static String PER_URL = URL + "/person/";
     private final static String PHONE_URL = URL + "/benphone/";
@@ -44,6 +46,36 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	@Override
 	public void setRestTemplate(RestTemplate restTemplate) {
 		this.restTemplate = restTemplate;
+	}
+
+	// Businessentity --------------------------------------------------------------------------------------------
+	
+	@Override
+	public List<Businessentity> findAllBusinessentitys() {
+		Businessentity[] array = restTemplate.getForObject(BEN_URL, Businessentity[].class);
+		
+		return Arrays.asList(array);
+	}
+
+	@Override
+	public Businessentity findBusinessentityById(Integer id) {
+		return restTemplate.getForObject(BEN_URL+id, Businessentity.class);
+	}
+
+	@Override
+	public void deleteBusinessentity(Businessentity ben) {
+		restTemplate.delete(BEN_URL+ben.getBusinessentityid());
+	}
+
+	@Override
+	public Businessentity saveBusinessentity(Businessentity ben) {
+		HttpEntity<Businessentity> request = new HttpEntity<>(ben);
+        return restTemplate.postForObject(BEN_URL, request, Businessentity.class);
+	}
+
+	@Override
+	public void editBusinessentity(Businessentity ben) {
+		restTemplate.put(BEN_URL, ben, Businessentity.class);
 	}
 
 	// Person --------------------------------------------------------------------------------------------
@@ -186,6 +218,7 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	public void editPersonphone(Personphone personphone) {
 		restTemplate.put(PHONE_URL, personphone, Personphone.class);
 	}
+
 
 	
 	

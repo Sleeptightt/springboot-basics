@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.front.businessdelegate.interfaces.BusinessDelegate;
 import com.example.demo.front.controller.interfaces.PersonController;
 import com.example.demo.front.model.person.Person;
 import com.example.demo.back.service.interfaces.BusinessEntityService;
@@ -22,23 +23,20 @@ import com.example.demo.back.service.interfaces.PersonService;
 @Controller
 public class PersonControllerImpl implements PersonController{
 	
-	private PersonService personService;
-	private BusinessEntityService benService;
-	
 	@Autowired
-	public PersonControllerImpl(PersonService personService, BusinessEntityService benService) {
-		this.personService = personService;
-		this.benService = benService;
+	private BusinessDelegate businessDelegate;
+	
+	public PersonControllerImpl() {
 	}
 	
 	@Override
 	@GetMapping("/person/")
 	public String indexPerson(@RequestParam(required = false, value = "id") Long id, Model model) {
 		if(id == null) {
-			model.addAttribute("persons", personService.findAll());
+			model.addAttribute("persons", businessDelegate.findAllPersons());
 		}else {
 			List<Person> persons = new ArrayList<>();
-			persons.add(personService.findById(id).get());
+			persons.add(businessDelegate.findPersonById(id.intValue()));
 			model.addAttribute("persons", persons);
 		}
 		return "person/index";
@@ -48,7 +46,7 @@ public class PersonControllerImpl implements PersonController{
 	@GetMapping("/person/add")
 	public String addPerson(Model model) {
 		model.addAttribute("person", new Person());
-		model.addAttribute("bens", benService.findAll());
+		model.addAttribute("bens", businessDelegate.findAllBusinessentitys());
 		return "person/add-person";
 	}
 
@@ -58,10 +56,10 @@ public class PersonControllerImpl implements PersonController{
 		if (!action.equals("Cancel")) {
 			if (result.hasErrors()) {
 				model.addAttribute("person", person);
-				model.addAttribute("bens", benService.findAll());
+				model.addAttribute("bens", businessDelegate.findAllBusinessentitys());
 				return "person/add-person";
 			}
-			personService.savePerson(person);
+			businessDelegate.savePerson(person);
 		}
 		return "redirect:/person/";
 	}
@@ -69,18 +67,19 @@ public class PersonControllerImpl implements PersonController{
 	@Override
 	@GetMapping("/person/del/{id}")
 	public String deletePerson(@PathVariable("id") long id, Model model) {
-		Person person = personService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-		personService.delete(person);
-		model.addAttribute("persons", personService.findAll());
+		Person person = businessDelegate.findPersonById((int) id);
+		businessDelegate.deletePerson(person);
+		model.addAttribute("persons", businessDelegate.findAllPersons());
+		model.addAttribute("bens", businessDelegate.findAllBusinessentitys());
 		return "person/index";
 	}
 
 	@Override
 	@GetMapping("/person/edit/{id}")
 	public String showUpdateForm(@PathVariable("id") long id, Model model) {
-		Person person = personService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+		Person person = businessDelegate.findPersonById((int) id);
 		model.addAttribute("person", person);
-		model.addAttribute("bens", benService.findAll());
+		model.addAttribute("bens", businessDelegate.findAllBusinessentitys());
 		return "person/update-person";
 	}
 
@@ -90,11 +89,11 @@ public class PersonControllerImpl implements PersonController{
 		if (action != null && !action.equals("Cancel")) {
 			if(bindingResult.hasErrors()) {
 				model.addAttribute("person", person);
-				model.addAttribute("bens", benService.findAll());
+				model.addAttribute("bens", businessDelegate.findAllBusinessentitys());
 				return "person/update-person";		
 			}
-			personService.updatePerson(person);
-			model.addAttribute("persons", personService.findAll());
+			businessDelegate.editPerson(person);
+			model.addAttribute("persons", businessDelegate.findAllPersons());
 		}
 		return "redirect:/person/";
 	}

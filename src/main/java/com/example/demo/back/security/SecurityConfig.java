@@ -38,14 +38,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 
-		
 		httpSecurity//.userDetailsService(myCustomUserDetailsService)
+		.csrf().disable()// se deshabilita para que funcionen las peticiones a los rest controllers, es mala practica deshabilitarlo, corregirlo de otra manera
 		.formLogin()
 		.loginPage("/login").permitAll()
 		.and().authorizeRequests()
-		.antMatchers("/auts/**")
+		.antMatchers("/api/**")
+		.permitAll()
+		.antMatchers("/person/**", "/addr/**")
 		.hasRole(UserType.ADMINISTRATOR.toString())
-		.antMatchers("/pres/**", "/thrs/**", "/locs/**")
+		.antMatchers("/benphone/**", "/benaddr/**")
 		.hasRole(UserType.OPERATOR.toString())
 		.anyRequest().authenticated().and()
 		.httpBasic().and().logout().invalidateHttpSession(true)

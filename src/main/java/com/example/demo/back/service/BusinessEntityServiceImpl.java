@@ -54,7 +54,7 @@ public class BusinessEntityServiceImpl implements BusinessEntityService{
 	}
 
 	@Override
-	public void delete(Businessentity ben) {
-		businessEntityRepository.delete(ben);
+	public void delete(Integer id) {
+		businessEntityRepository.deleteById(id);
 	}
 }

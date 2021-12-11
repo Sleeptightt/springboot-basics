@@ -1,5 +1,6 @@
 package com.example.demo.back.service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.function.BooleanSupplier;
 
@@ -7,6 +8,8 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.back.daos.PersonDao;
 import com.example.demo.front.model.person.Businessentity;
@@ -29,7 +32,6 @@ public class PersonServiceImpl implements PersonService{
 		this.benRepository = benRepository;
 	}
 	
-	@Transactional
 	public Person savePerson(Person person) {
 		if(person == null) {
 			return null;
@@ -78,8 +80,23 @@ public class PersonServiceImpl implements PersonService{
 	}
 
 	@Override
-	public void delete(Person person) {
-		personDao.deleteById(person.getBusinessentityid());
+	public void delete(Integer id) {
+		personDao.deleteById(id);
 	}
+	
+	@Override
+    public List<Person> findAllByPersontype(String persontype) {
+        return personDao.findAllByPersontype(persontype);
+    }
+	
+	@Override
+    public List<Person> findAllByTitle(String title) {
+        return personDao.findAllByTitle(title);
+    }
+	
+	@Override
+    public List<Person> findAllByBusinessentityid(Integer businessentity) {
+        return personDao.findAllByBusinessentityid(businessentity);
+    }
 	
 }

@@ -10,7 +10,7 @@ public interface BusinessEntityService {
 	
 	public Optional<Businessentity> findById(long id);
 	
-	public void delete(Businessentity ben);
+	public void delete(Integer id);
 	
 	public Businessentity saveBusinessEntity(Businessentity ben);
 	

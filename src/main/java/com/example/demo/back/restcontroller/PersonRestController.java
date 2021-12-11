@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.back.daos.PersonDao;
+import com.example.demo.back.repository.BusinessEntityRepository;
+import com.example.demo.back.service.interfaces.PersonService;
+import com.example.demo.front.model.person.Businessentity;
 import com.example.demo.front.model.person.Person;
 
 @RestController
@@ -21,45 +24,45 @@ import com.example.demo.front.model.person.Person;
 public class PersonRestController {
 	
 	@Autowired
-	PersonDao personDao;
+	private PersonService personService;
 	
 	@GetMapping
     public Iterable<Person> getPersons() {
-        return personDao.getAll();
+        return personService.findAll();
     }
 	
-   @PostMapping
+    @PostMapping
     public void addPerson(@RequestBody Person person) {
-        personDao.save(person);
+	   	personService.savePerson(person);
     }
 	
 	@PutMapping
     public void updatePerson(@RequestBody Person person) {
-        personDao.update(person);
+        personService.updatePerson(person);
     }
 	
 	@GetMapping("/{id}")
     public Person getById(@PathVariable("id") Integer id) {
-        return personDao.get(id).orElseThrow(() -> new IllegalArgumentException("Invalid id"));
+        return personService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid id"));
     }
 	
 	@DeleteMapping("/{id}")
     public void delete(@PathVariable("id") Integer id) {
-        personDao.deleteById(id);
+        personService.delete(id);
     }
 	
 	@GetMapping("/search/findAllByPersonType")
     public List<Person> getAllByPersonType(@RequestParam("persontype") String persontype) {
-        return personDao.findAllByPersontype(persontype);
+        return personService.findAllByPersontype(persontype);
     }
 	
 	@GetMapping("/search/findAllByTitle")
     public List<Person> getAllByTitle(@RequestParam("title") String title) {
-        return personDao.findAllByTitle(title);
+        return personService.findAllByTitle(title);
     }
 	
 	@GetMapping("/search/findAllByBusinessEntity")
     public List<Person> getAllByTitle(@RequestParam("businessentity") Integer businessentity) {
-        return personDao.findAllByBusinessentityid(businessentity);
+        return personService.findAllByBusinessentityid(businessentity);
     }
 }

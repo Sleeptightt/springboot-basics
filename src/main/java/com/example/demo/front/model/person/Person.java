@@ -23,6 +23,7 @@ import org.hibernate.annotations.Cascade;
 import com.example.demo.back.model.person.Businessentitycontact;
 import com.example.demo.back.model.person.Emailaddress;
 import com.example.demo.back.model.person.Password;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * The persistent class for the person database table.
@@ -66,10 +67,12 @@ public class Person implements Serializable {
 	private String title;
 
 	// bi-directional many-to-one association to Businessentitycontact
+	@JsonIgnore
 	@OneToMany(mappedBy = "person")
 	private List<Businessentitycontact> businessentitycontacts;
 
 	// bi-directional many-to-one association to Emailaddress
+	@JsonIgnore
 	@OneToMany(mappedBy = "person")
 	private List<Emailaddress> emailaddresses;
 
@@ -79,11 +82,11 @@ public class Person implements Serializable {
 
 	// bi-directional one-to-one association to Businessentity
 	@OneToOne()
-
 	@JoinColumn(name = "businessentityid")
 	private Businessentity businessentity;
 
 	// bi-directional many-to-one association to Personphone
+	@JsonIgnore
 	@OneToMany(mappedBy = "person")
 	private List<Personphone> personphones;
 

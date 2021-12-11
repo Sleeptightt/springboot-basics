@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.front.businessdelegate.interfaces.BusinessDelegate;
 import com.example.demo.front.controller.interfaces.AddressController;
 import com.example.demo.front.model.person.Address;
 import com.example.demo.front.model.person.Stateprovince;
@@ -26,19 +27,17 @@ import lombok.extern.java.Log;
 @Controller
 public class AddressControllerImpl implements AddressController{
 	
-	private AddressService addrService;
-	private StateProvinceService stprovService;
-	
 	@Autowired
-	public AddressControllerImpl(AddressService addrService, StateProvinceService stprovService) {
-		this.addrService = addrService;
-		this.stprovService = stprovService;
+	private BusinessDelegate businessDelegate;
+	
+	public AddressControllerImpl() {
+
 	}
 
 	@GetMapping("/addr/")
 	public String indexAddress(@RequestParam(required = false, value = "id") Long id, Model model) {
 		if(id == null) {
-			model.addAttribute("addrs", addrService.findAll());
+			model.addAttribute("addrs", businessDelegate.findAllAddresses());
 		}else {
 			Stateprovince stprov = stprovService.findById(id).get();
 			model.addAttribute("addrs", addrService.findAllByStateprovince(stprov));

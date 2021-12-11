@@ -11,6 +11,14 @@ public interface BusinessDelegate {
 	
 	void setRestTemplate(RestTemplate restTemplate);
 	
+	//BUSINESS ENTITY
+	
+    List<Businessentity> findAllBusinessentitys();
+    Businessentity findBusinessentityById(Integer id);
+    void deleteBusinessentity(Businessentity ben);
+    Businessentity saveBusinessentity(Businessentity ben);
+    void editBusinessentity(Businessentity ben);
+	
 	//PERSON
 	
     List<Person> findAllPersonsByPersonType(String persontype);
