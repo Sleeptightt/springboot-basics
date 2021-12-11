@@ -98,12 +98,12 @@ public class PersonPhoneServiceImpl implements PersonPhoneService{
 
 	@Override
 	public Iterable<Personphone> findAllByPerson(Person person) {
-		return personPhoneDao.findAllByPerson(person);
+		return personPhoneDao.findAllByPerson(person.getBusinessentityid());
 	}
 
 	@Override
 	public Iterable<Personphone> findAllByPhoneNumbertype(Phonenumbertype phonetype) {
-		return personPhoneDao.findAllByPhonenumbertype(phonetype);
+		return personPhoneDao.findAllByPhonenumbertype(phonetype.getPhonenumbertypeid());
 	}
 
 }

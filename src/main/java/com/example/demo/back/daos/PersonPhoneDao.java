@@ -76,9 +76,9 @@ public class PersonPhoneDao implements Dao<Personphone, PersonphonePK>{
 		}
 	}
 	
-	public List<Personphone> findAllByPhonenumbertype(Phonenumbertype phonetype) {
+	public List<Personphone> findAllByPhonenumbertype(Integer phonenumbertype) {
 		Query query = entityManager.createQuery("SELECT ph FROM Personphone ph WHERE ph.phonenumbertype.phonenumbertypeid = :phonenumbertypeid");
-		query.setParameter("phonenumbertypeid", phonetype.getPhonenumbertypeid());
+		query.setParameter("phonenumbertypeid", phonenumbertype);
 		return query.getResultList();
 	}
 	
@@ -97,9 +97,9 @@ public class PersonPhoneDao implements Dao<Personphone, PersonphonePK>{
 		return query.getResultList();
 	}
 
-	public List<Personphone> findAllByPerson(Person person){
+	public List<Personphone> findAllByPerson(Integer person){
 		Query query = entityManager.createQuery("SELECT ph FROM Personphone ph WHERE ph.person.businessentityid = :personid");
-		query.setParameter("personid", person.getBusinessentityid());
+		query.setParameter("personid", person);
 		return query.getResultList();
 	}
 	

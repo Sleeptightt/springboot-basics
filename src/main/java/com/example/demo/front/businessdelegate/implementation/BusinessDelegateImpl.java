@@ -18,6 +18,8 @@ import org.springframework.web.client.RestTemplate;
 import com.example.demo.front.businessdelegate.interfaces.BusinessDelegate;
 import com.example.demo.front.model.person.Address;
 import com.example.demo.front.model.person.Person;
+import com.example.demo.front.model.person.Personphone;
+import com.example.demo.front.model.person.PersonphonePK;
 
 @Component
 public class BusinessDelegateImpl implements BusinessDelegate{
@@ -26,6 +28,7 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 
 	private final static String ADDR_URL = URL + "/addr/";
     private final static String PER_URL = URL + "/person/";
+    private final static String PHONE_URL = URL + "/benphone/";
 	
 	private RestTemplate restTemplate;
 	
@@ -138,6 +141,50 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	@Override
 	public void editAddress(Address addr) {
 		restTemplate.put(ADDR_URL, addr, Address.class);
+	}
+
+	//Personphone --------------------------------------------------------------------------------------------
+	
+	@Override
+	public List<Personphone> findAllPersonphonesByPhonenumbertype(Integer phonenumbertype) {
+		Personphone[] array = restTemplate.getForObject(PHONE_URL+
+                "search/findAllByPhoneNumberType?phonenumbertype=" + phonenumbertype, Personphone[].class);
+        return Arrays.asList(array);
+	}
+
+	@Override
+	public List<Personphone> findAllPersonPhonesByPerson(Integer person) {
+		Personphone[] array = restTemplate.getForObject(PHONE_URL+
+                "search/findAllByPerson?person=" + person, Personphone[].class);
+        return Arrays.asList(array);
+	}
+
+	@Override
+	public List<Personphone> findAllPersonphones() {
+		Personphone[] array = restTemplate.getForObject(PHONE_URL, Personphone[].class);
+		
+		return Arrays.asList(array);
+	}
+
+	@Override
+	public Personphone findPersonphoneById(PersonphonePK id) {
+		return restTemplate.getForObject(PHONE_URL+id.getBusinessentityid()+"&"+id.getPhonenumbertypeid(), Personphone.class);
+	}
+
+	@Override
+	public void deletePersonphone(Personphone personphone) {
+		restTemplate.delete(PHONE_URL+personphone.getId().getBusinessentityid()+"&"+personphone.getId().getPhonenumbertypeid());
+	}
+
+	@Override
+	public Personphone savePersonphone(Personphone personphone) {
+		HttpEntity<Personphone> request = new HttpEntity<>(personphone);
+        return restTemplate.postForObject(PHONE_URL, request, Personphone.class);
+	}
+
+	@Override
+	public void editPersonphone(Personphone personphone) {
+		restTemplate.put(PHONE_URL, personphone, Personphone.class);
 	}
 
 	

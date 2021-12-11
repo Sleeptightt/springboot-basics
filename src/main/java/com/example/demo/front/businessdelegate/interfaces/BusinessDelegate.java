@@ -22,7 +22,6 @@ public interface BusinessDelegate {
     Person savePerson(Person person);
     void editPerson(Person person);
 	
-    
     //ADDRESS
 	
     List<Address> findAllAddressByModifiedDate(Timestamp modifieddate);
@@ -32,4 +31,14 @@ public interface BusinessDelegate {
     void deleteAddress(Address addr);
     Address saveAddress(Address addr);
     void editAddress(Address addr);
+    
+    //PERSONPHONE
+	
+    List<Personphone> findAllPersonphonesByPhonenumbertype(Integer phonenumbertype);
+    List<Personphone> findAllPersonPhonesByPerson(Integer person);
+    List<Personphone> findAllPersonphones();
+    Personphone findPersonphoneById(PersonphonePK id);
+    void deletePersonphone(Personphone personphone);
+    Personphone savePersonphone(Personphone personphone);
+    void editPersonphone(Personphone personphone);
 }
