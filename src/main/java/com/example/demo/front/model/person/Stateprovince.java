@@ -15,6 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 import com.example.demo.back.model.person.Countryregion;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * The persistent class for the stateprovince database table.
@@ -43,6 +44,7 @@ public class Stateprovince implements Serializable {
 	private Integer territoryid;
 
 	// bi-directional many-to-one association to Address
+	@JsonIgnore
 	@OneToMany(mappedBy = "stateprovince")
 	private List<Address> addresses;
 

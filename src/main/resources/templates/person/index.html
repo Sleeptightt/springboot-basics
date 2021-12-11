@@ -43,7 +43,7 @@
 								<td th:text="${person.lastname}"></td>
 								<td th:text="${person.title}"></td>
 								<td th:text="${person.additionalcontactinfo}"></td>
-								<td><a th:text="${person.businessentity.businessentityid}" th:href="@{/ben/?id={id}(id=${person.businessentity.businessentityid})}"></a></td>
+								<td><a th:text="${person.businessentityid}" th:href="@{/ben/?id={id}(id=${person.businessentityid})}"></a></td>
 								<td><a th:href="@{/benphone/?id1={id1}(id1=${person.businessentityid})}">Go to business entity phone numbers</a></td>
 								<td><a th:href="@{/person/edit/{id}(id=${person.businessentityid})}"
 									class="btn btn-primary"><i class="fas fa-calendar ml-2"></i></a></td>

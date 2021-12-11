@@ -30,6 +30,14 @@ public interface BusinessDelegate {
     Person savePerson(Person person);
     void editPerson(Person person);
 	
+    //STATE PROVINCE
+	
+    List<Stateprovince> findAllStateprovinces();
+    Stateprovince findStateprovinceById(Integer id);
+    void deleteStateprovince(Stateprovince stprov);
+    Stateprovince saveStateprovince(Stateprovince stprov);
+    void editStateprovince(Stateprovince stprov);
+    
     //ADDRESS
 	
     List<Address> findAllAddressByModifiedDate(Timestamp modifieddate);

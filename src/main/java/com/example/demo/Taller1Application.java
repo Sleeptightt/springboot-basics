@@ -44,7 +44,8 @@ public class Taller1Application {
 			AddressService addrService, AddressTypeService addrtypeService, PhoneNumberTypeService phonetypeService) {
 		return (args) -> {
 				UserApp u = new UserApp(1,"sleep","{noop}123", UserType.ADMINISTRATOR);
-				userService.save(u);
+				UserApp u2 = new UserApp(2,"slee","{noop}123", UserType.OPERATOR);
+				userService.save(u); userService.save(u2);
 //				Businessentity ben = new Businessentity();
 //				ben = benService.saveBusinessEntity(ben);
 //				Person p = new Person();

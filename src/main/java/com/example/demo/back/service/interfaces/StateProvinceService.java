@@ -12,7 +12,7 @@ public interface StateProvinceService {
 
 	public Optional<Stateprovince> findById(long id);
 	
-	public void delete(Stateprovince stprov);
+	public void delete(Integer id);
 
 	public Stateprovince updateStateprovince(Stateprovince stprov);
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.front.businessdelegate.interfaces.BusinessDelegate;
 import com.example.demo.front.controller.interfaces.StateProvinceController;
 import com.example.demo.front.model.person.Stateprovince;
 import com.example.demo.back.service.interfaces.StateProvinceService;
@@ -21,21 +22,21 @@ import com.example.demo.back.service.interfaces.StateProvinceService;
 @Controller
 public class StateProvinceControllerImpl implements StateProvinceController{
 	
-	private StateProvinceService stprovService;
-	
 	@Autowired
-	public StateProvinceControllerImpl(StateProvinceService stprovService) {
-		this.stprovService = stprovService;
+	private BusinessDelegate businessDelegate;
+	
+	public StateProvinceControllerImpl() {
+		
 	}
 
 	@Override
 	@GetMapping("/stprov/")
 	public String indexStateProvince(@RequestParam(required = false, value = "id") Long id, Model model) {
 		if(id == null) {
-			model.addAttribute("stprovs", stprovService.findAll());
+			model.addAttribute("stprovs", businessDelegate.findAllStateprovinces());
 		}else {
 			List<Stateprovince> stprovs = new ArrayList<>();
-			stprovs.add(stprovService.findById(id).get());
+			stprovs.add(businessDelegate.findStateprovinceById(id.intValue()));
 			model.addAttribute("stprovs", stprovs);
 		}
 		return "stprov/index";
@@ -56,7 +57,7 @@ public class StateProvinceControllerImpl implements StateProvinceController{
 				model.addAttribute("stprov", stprov);
 				return "stprov/add-stprov";
 			}
-			stprovService.saveStateprovince(stprov);
+			businessDelegate.saveStateprovince(stprov);
 		}
 		return "redirect:/stprov/";
 	}
@@ -64,16 +65,16 @@ public class StateProvinceControllerImpl implements StateProvinceController{
 	@Override
 	@GetMapping("/stprov/del/{id}")
 	public String deleteStateProvince(@PathVariable("id") long id, Model model) {
-		Stateprovince stprov = stprovService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-		stprovService.delete(stprov);
-		model.addAttribute("stprovs", stprovService.findAll());
+		Stateprovince stprov = businessDelegate.findStateprovinceById((int)id);
+		businessDelegate.deleteStateprovince(stprov);
+		model.addAttribute("stprovs", businessDelegate.findAllStateprovinces());
 		return "stprov/index";
 	}
 
 	@Override
 	@GetMapping("/stprov/edit/{id}")
 	public String showUpdateForm(@PathVariable("id") long id, Model model) {
-		Stateprovince stprov = stprovService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+		Stateprovince stprov = businessDelegate.findStateprovinceById((int)id);
 		model.addAttribute("stprov", stprov);
 		return "stprov/update-stprov";
 	}
@@ -87,8 +88,8 @@ public class StateProvinceControllerImpl implements StateProvinceController{
 				model.addAttribute("stprov", stprov);
 				return "stprov/update-stprov";		
 			}
-			stprovService.updateStateprovince(stprov);
-			model.addAttribute("stprovs", stprovService.findAll());
+			businessDelegate.editStateprovince(stprov);
+			model.addAttribute("stprovs", businessDelegate.findAllStateprovinces());
 		}
 		return "redirect:/stprov/";
 	}

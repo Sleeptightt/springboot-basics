@@ -39,8 +39,8 @@ public class AddressControllerImpl implements AddressController{
 		if(id == null) {
 			model.addAttribute("addrs", businessDelegate.findAllAddresses());
 		}else {
-			Stateprovince stprov = stprovService.findById(id).get();
-			model.addAttribute("addrs", addrService.findAllByStateprovince(stprov));
+			Stateprovince stprov = businessDelegate.findStateprovinceById(id.intValue());
+			model.addAttribute("addrs", businessDelegate.findAllAddressByStateProvince(stprov.getStateprovinceid()));
 		}
 		return "addr/index";
 	}
@@ -48,7 +48,7 @@ public class AddressControllerImpl implements AddressController{
 	@GetMapping("/addr/add")
 	public String addAddress(Model model) {
 		model.addAttribute("addr", new Address());
-		model.addAttribute("stprovs", stprovService.findAll());
+		model.addAttribute("stprovs", businessDelegate.findAllStateprovinces());
 		return "addr/add-addr";
 	}
 	
@@ -57,27 +57,27 @@ public class AddressControllerImpl implements AddressController{
 		if (!action.equals("Cancel")) {
 			if (result.hasErrors()) {
 				model.addAttribute("addr", address);
-				model.addAttribute("stprovs", stprovService.findAll());
+				model.addAttribute("stprovs", businessDelegate.findAllStateprovinces());
 				return "addr/add-addr";
 			}
-			addrService.saveAddress(address);
+			businessDelegate.saveAddress(address);
 		}
 		return "redirect:/addr/";
 	}
 	
 	@GetMapping("/addr/del/{id}")
 	public String deleteAddress(@PathVariable("id") long id, Model model) {
-		Address addr = addrService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-		addrService.delete(addr);
-		model.addAttribute("addrs", addrService.findAll());
+		Address addr = businessDelegate.findAddressById((int)id);
+		businessDelegate.deleteAddress(addr);
+		model.addAttribute("addrs", businessDelegate.findAllAddresses());
 		return "addr/index";
 	}
 	
 	@GetMapping("/addr/edit/{id}")
 	public String showUpdateForm(@PathVariable("id") long id, Model model) {
-		Address addr = addrService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+		Address addr = businessDelegate.findAddressById((int)id);
 		model.addAttribute("addr", addr);
-		model.addAttribute("stprovs", stprovService.findAll());
+		model.addAttribute("stprovs", businessDelegate.findAllStateprovinces());
 		return "addr/update-addr";
 	}
 	
@@ -87,11 +87,11 @@ public class AddressControllerImpl implements AddressController{
 		if (action != null && !action.equals("Cancel")) {
 			if(bindingResult.hasErrors()) {
 				model.addAttribute("addr", address);
-				model.addAttribute("stprovs", stprovService.findAll());
+				model.addAttribute("stprovs", businessDelegate.findAllStateprovinces());
 				return "addr/update-addr";		
 			}
-			addrService.updateAddress(address);
-			model.addAttribute("addrs", addrService.findAll());
+			businessDelegate.editAddress(address);
+			model.addAttribute("addrs", businessDelegate.findAllAddresses());
 		}
 		return "redirect:/addr/";
 	}

@@ -21,6 +21,7 @@ import com.example.demo.front.model.person.Businessentity;
 import com.example.demo.front.model.person.Person;
 import com.example.demo.front.model.person.Personphone;
 import com.example.demo.front.model.person.PersonphonePK;
+import com.example.demo.front.model.person.Stateprovince;
 
 @Component
 public class BusinessDelegateImpl implements BusinessDelegate{
@@ -28,6 +29,7 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	private final static String URL = "http://localhost:8080/api";
 
 	private final static String BEN_URL = URL + "/ben/";
+	private final static String STPROV_URL = URL + "/stprov/";
 	private final static String ADDR_URL = URL + "/addr/";
     private final static String PER_URL = URL + "/person/";
     private final static String PHONE_URL = URL + "/benphone/";
@@ -129,6 +131,35 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		restTemplate.put(PER_URL, person, Person.class);
 	}
 
+	//Stateprovince --------------------------------------------------------------------------------------------
+	
+	@Override
+	public List<Stateprovince> findAllStateprovinces() {
+		Stateprovince[] array = restTemplate.getForObject(STPROV_URL, Stateprovince[].class);
+		return Arrays.asList(array);
+	}
+
+	@Override
+	public Stateprovince findStateprovinceById(Integer id) {
+		return restTemplate.getForObject(STPROV_URL+id, Stateprovince.class);
+	}
+
+	@Override
+	public void deleteStateprovince(Stateprovince stprov) {
+		restTemplate.delete(STPROV_URL+stprov.getStateprovinceid());
+	}
+
+	@Override
+	public Stateprovince saveStateprovince(Stateprovince stprov) {
+		HttpEntity<Stateprovince> request = new HttpEntity<>(stprov);
+        return restTemplate.postForObject(STPROV_URL, request, Stateprovince.class);
+	}
+
+	@Override
+	public void editStateprovince(Stateprovince stprov) {
+		restTemplate.put(STPROV_URL, stprov, Stateprovince.class);
+	}
+	
 	//Address --------------------------------------------------------------------------------------------
 	
 	@Override
@@ -218,6 +249,7 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	public void editPersonphone(Personphone personphone) {
 		restTemplate.put(PHONE_URL, personphone, Personphone.class);
 	}
+
 
 
 	

@@ -62,8 +62,8 @@ public class StateProvinceServiceImpl implements StateProvinceService{
 	}
 
 	@Override
-	public void delete(Stateprovince stprov) {
-		stateProvinceRepository.delete(stprov);
+	public void delete(Integer id) {
+		stateProvinceRepository.deleteById(id);
 	}
 
 }

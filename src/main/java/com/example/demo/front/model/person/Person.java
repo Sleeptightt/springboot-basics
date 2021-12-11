@@ -81,6 +81,7 @@ public class Person implements Serializable {
 	private Password password;
 
 	// bi-directional one-to-one association to Businessentity
+	@JsonIgnore
 	@OneToOne()
 	@JoinColumn(name = "businessentityid")
 	private Businessentity businessentity;
