@@ -45,8 +45,8 @@ public class AddressTypeServiceImpl implements AddressTypeService{
 	}
 
 	@Override
-	public void delete(Addresstype addrtype) {
-		addressTypeRepository.delete(addrtype);
+	public void delete(Integer id) {
+		addressTypeRepository.deleteById(id);
 	}
 
 	@Override

@@ -12,7 +12,7 @@ public interface AddressTypeService {
 
 	public Optional<Addresstype> findById(long id);
 	
-	public void delete(Addresstype addrtype);
+	public void delete(Integer id);
 
 	public Addresstype updateAddressType(Addresstype addrtype);
 	

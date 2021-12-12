@@ -60,14 +60,12 @@ public class PersonPhoneServiceImpl implements PersonPhoneService{
 	public Personphone updatePersonPhone(Personphone personPhone) {
 		if(personPhone == null || personPhone.getId() == null 
 				|| personPhone.getPerson() == null || personPhone.getPerson().getBusinessentityid() == null 
-				|| personPhone.getPhonenumbertype() == null || personPhone.getPhonenumbertype().getPhonenumbertypeid() == null 
-				|| personPhone.getPerson().getBusinessentity() == null || personPhone.getPerson().getBusinessentity().getBusinessentityid() == null)
+				|| personPhone.getPhonenumbertype() == null || personPhone.getPhonenumbertype().getPhonenumbertypeid() == null )
 		return null;
-		Integer personid = personPhone.getPerson().getBusinessentityid();
 		Integer businessEntityid = personPhone.getPerson().getBusinessentity().getBusinessentityid();
 		Integer phoneNumberTypeid = personPhone.getPhonenumbertype().getPhonenumbertypeid();
 		
-		if(!personDao.findById(personid).isPresent() || !businessEntityRepository.existsById(businessEntityid) || !phoneNumberTypeRepository.existsById(phoneNumberTypeid))
+		if(!personDao.findById(businessEntityid).isPresent() || !businessEntityRepository.existsById(businessEntityid) || !phoneNumberTypeRepository.existsById(phoneNumberTypeid))
 			return null;
 		PersonphonePK id = personPhone.getId();
 		Personphone existingPhone = personPhoneDao.findById(id).get();

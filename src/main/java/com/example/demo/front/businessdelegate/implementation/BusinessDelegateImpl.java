@@ -17,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.example.demo.front.businessdelegate.interfaces.BusinessDelegate;
 import com.example.demo.front.model.person.Address;
+import com.example.demo.front.model.person.Addresstype;
 import com.example.demo.front.model.person.Businessentity;
 import com.example.demo.front.model.person.Person;
 import com.example.demo.front.model.person.Personphone;
@@ -35,6 +36,7 @@ public class BusinessDelegateImpl implements BusinessDelegate{
     private final static String PER_URL = URL + "/person/";
     private final static String PHONE_URL = URL + "/benphone/";
     private final static String PHONE_TYPE_URL = URL + "/phonetype/";
+    private final static String ADDR_TYPE_URL = URL + "/addrtype/";
 	
 	private RestTemplate restTemplate;
 	
@@ -208,6 +210,35 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		restTemplate.put(ADDR_URL, addr, Address.class);
 	}
 
+	//Addresstype --------------------------------------------------------------------------------------------
+	
+	@Override
+	public List<Addresstype> findAllAddresstypes() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Addresstype findAddresstypeById(Integer id) {
+		return restTemplate.getForObject(ADDR_TYPE_URL+id, Addresstype.class);
+	}
+
+	@Override
+	public void deleteAddresstype(Addresstype addrtype) {
+		restTemplate.delete(ADDR_TYPE_URL+addrtype.getAddresstypeid());
+	}
+
+	@Override
+	public Addresstype saveAddresstype(Addresstype addrtype) {
+		HttpEntity<Addresstype> request = new HttpEntity<>(addrtype);
+        return restTemplate.postForObject(ADDR_TYPE_URL, request, Addresstype.class);
+	}
+
+	@Override
+	public void editAddresstype(Addresstype addrtype) {
+		restTemplate.put(ADDR_TYPE_URL, addrtype, Addresstype.class);
+	}
+	
 	//Phonenumbertype --------------------------------------------------------------------------------------------
 	
 	@Override
@@ -281,6 +312,8 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	public void editPersonphone(Personphone personphone) {
 		restTemplate.put(PHONE_URL, personphone, Personphone.class);
 	}
+
+	
 
 	
 

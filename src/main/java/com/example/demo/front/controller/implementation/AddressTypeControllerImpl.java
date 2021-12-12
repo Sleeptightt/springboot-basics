@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.front.businessdelegate.interfaces.BusinessDelegate;
 import com.example.demo.front.controller.interfaces.AddressTypeController;
 import com.example.demo.front.model.person.Addresstype;
 import com.example.demo.back.service.interfaces.AddressTypeService;
@@ -21,21 +22,20 @@ import com.example.demo.back.service.interfaces.AddressTypeService;
 @Controller
 public class AddressTypeControllerImpl implements AddressTypeController{
 
-	private AddressTypeService addrtypeService;
+	private BusinessDelegate businessDelegate;
 	
 	@Autowired
-	public AddressTypeControllerImpl(AddressTypeService addrtypeService) {
-		this.addrtypeService = addrtypeService;
+	public AddressTypeControllerImpl() {
 	}
 
 	@Override
 	@GetMapping("/addrtype/")
 	public String indexAddressType(@RequestParam(required = false, value = "id") Long id, Model model) {
 		if(id == null) {
-			model.addAttribute("addrtypes", addrtypeService.findAll());
+			model.addAttribute("addrtypes", businessDelegate.findAllAddresstypes());
 		}else {
 			List<Addresstype> addrtypes = new ArrayList<>();
-			addrtypes.add(addrtypeService.findById(id).get());
+			addrtypes.add(businessDelegate.findAddresstypeById(id.intValue()));
 			model.addAttribute("addrtypes", addrtypes);
 		}
 		return "addrtype/index";
@@ -56,7 +56,7 @@ public class AddressTypeControllerImpl implements AddressTypeController{
 				model.addAttribute("addrtype", addrtype);
 				return "addrtype/add-addrtype";
 			}
-			addrtypeService.saveAddressType(addrtype);
+			businessDelegate.saveAddresstype(addrtype);
 		}
 		return "redirect:/addrtype/";
 	}
@@ -64,16 +64,16 @@ public class AddressTypeControllerImpl implements AddressTypeController{
 	@Override
 	@GetMapping("/addrtype/del/{id}")
 	public String deleteAddressType(@PathVariable("id") long id, Model model) {
-		Addresstype addrtype = addrtypeService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-		addrtypeService.delete(addrtype);
-		model.addAttribute("addrtypes", addrtypeService.findAll());
+		Addresstype addrtype = businessDelegate.findAddresstypeById((int)id);
+		businessDelegate.deleteAddresstype(addrtype);
+		model.addAttribute("addrtypes", businessDelegate.findAllAddresstypes());
 		return "addrtype/index";
 	}
 
 	@Override
 	@GetMapping("/addrtype/edit/{id}")
 	public String showUpdateForm(@PathVariable("id") long id, Model model) {
-		Addresstype addrtype = addrtypeService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+		Addresstype addrtype = businessDelegate.findAddresstypeById((int)id);
 		model.addAttribute("addrtype", addrtype);
 		return "addrtype/update-addrtype";
 	}
@@ -87,8 +87,8 @@ public class AddressTypeControllerImpl implements AddressTypeController{
 				model.addAttribute("addrtype", addrtype);
 				return "addrtype/update-addrtype";		
 			}
-			addrtypeService.updateAddressType(addrtype);
-			model.addAttribute("addrtypes", addrtypeService.findAll());
+			businessDelegate.editAddresstype(addrtype);
+			model.addAttribute("addrtypes", businessDelegate.findAllAddresstypes());
 		}
 		return "redirect:/addrtype/";
 	}
