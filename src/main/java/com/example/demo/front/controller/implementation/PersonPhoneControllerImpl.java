@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.front.businessdelegate.interfaces.BusinessDelegate;
 import com.example.demo.front.controller.interfaces.PersonPhoneController;
 import com.example.demo.front.model.person.Personphone;
 import com.example.demo.front.model.person.PersonphonePK;
@@ -26,29 +27,24 @@ import lombok.extern.java.Log;
 @Controller
 public class PersonPhoneControllerImpl implements PersonPhoneController{
 	
-	private PersonPhoneService benphoneService;
-	private PersonService personService;
-	private PhoneNumberTypeService phonetypeService;
+	@Autowired
+	private BusinessDelegate businessDelegate;
 	
 	@Autowired
-	public PersonPhoneControllerImpl(PersonPhoneService benphoneService, PersonService personService,
-			PhoneNumberTypeService phonetypeService) {
-		this.benphoneService = benphoneService;
-		this.personService = personService;
-		this.phonetypeService = phonetypeService;
+	public PersonPhoneControllerImpl() {
 	}
 
 	@Override
 	@GetMapping("/benphone/")
 	public String indexPersonPhone(@RequestParam(required = false, value = "id1") Long id1, @RequestParam(required = false, value = "id2") Long id2, Model model) {
 		if(id1 != null) {
-			Person person = personService.findById(id1).get();
-			model.addAttribute("benphones", benphoneService.findAllByPerson(person));
+			Person person = businessDelegate.findPersonById(id1.intValue());
+			model.addAttribute("benphones", businessDelegate.findAllPersonPhonesByPerson(person.getBusinessentityid()));
 		}else if(id2 != null) {
-			Phonenumbertype phonetype = phonetypeService.findById(id2).get();
-			model.addAttribute("benphones", benphoneService.findAllByPhoneNumbertype(phonetype));
+			Phonenumbertype phonetype = businessDelegate.findPhonenumbertypeById(id2.intValue());
+			model.addAttribute("benphones", businessDelegate.findAllPersonphonesByPhonenumbertype(phonetype.getPhonenumbertypeid()));
 		}else {
-			model.addAttribute("benphones", benphoneService.findAll());
+			model.addAttribute("benphones", businessDelegate.findAllPersonphones());
 		}
 		return "benphone/index";
 	}
@@ -57,8 +53,8 @@ public class PersonPhoneControllerImpl implements PersonPhoneController{
 	@GetMapping("/benphone/add")
 	public String addPersonPhone(Model model) {
 		model.addAttribute("benphone", new Personphone());
-		model.addAttribute("persons", personService.findAll());
-		model.addAttribute("phonetypes", phonetypeService.findAll());
+		model.addAttribute("persons", businessDelegate.findAllPersons());
+		model.addAttribute("phonetypes", businessDelegate.findAllPhonenumbertypes());
 		return "benphone/add-benphone";
 	}
 
@@ -68,8 +64,8 @@ public class PersonPhoneControllerImpl implements PersonPhoneController{
 		if (!action.equals("Cancel")) {
 			if (result.hasErrors()) {
 				model.addAttribute("benphone", new Personphone());
-				model.addAttribute("persons", personService.findAll());
-				model.addAttribute("phonetypes", phonetypeService.findAll());
+				model.addAttribute("persons", businessDelegate.findAllPersons());
+				model.addAttribute("phonetypes", businessDelegate.findAllPhonenumbertypes());
 				log.info(result.getAllErrors().toString() + " " + benphone.getPhonenumbertype().toString());
 				return "benphone/add-benphone";
 			}
@@ -77,7 +73,7 @@ public class PersonPhoneControllerImpl implements PersonPhoneController{
 			id.setBusinessentityid((int) benphone.getPerson().getBusinessentityid()); id.setPhonenumbertypeid((int) benphone.getPhonenumbertype().getPhonenumbertypeid()); 
 			id.setPhonenumber("3291057293");
 			benphone.setId(id);
-			benphoneService.savePersonPhone(benphone);
+			businessDelegate.savePersonphone(benphone);
 		}
 		return "redirect:/benphone/";
 	}
@@ -87,9 +83,9 @@ public class PersonPhoneControllerImpl implements PersonPhoneController{
 	public String deletePersonPhone(@PathVariable("id1") long id1, @PathVariable("id2") long id2, Model model) {
 		PersonphonePK id = new PersonphonePK();
 		id.setBusinessentityid((int) id1); id.setPhonenumbertypeid((int) id2); id.setPhonenumber("3291057293");
-		Personphone benphone = benphoneService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-		benphoneService.delete(benphone);
-		model.addAttribute("benphones", benphoneService.findAll());
+		Personphone benphone = businessDelegate.findPersonphoneById(id);
+		businessDelegate.deletePersonphone(benphone);
+		model.addAttribute("benphones", businessDelegate.findAllPersonphones());
 		return "benphone/index";
 	}
 
@@ -98,10 +94,10 @@ public class PersonPhoneControllerImpl implements PersonPhoneController{
 	public String showUpdateForm(@PathVariable("id1") long id1, @PathVariable("id2") long id2, Model model) {
 		PersonphonePK id = new PersonphonePK();
 		id.setBusinessentityid((int) id1); id.setPhonenumbertypeid((int) id2); id.setPhonenumber("3291057293");
-		Personphone benphone = benphoneService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+		Personphone benphone = businessDelegate.findPersonphoneById(id);
 		model.addAttribute("benphone", benphone);
-		model.addAttribute("persons", personService.findAll());
-		model.addAttribute("phonetypes", phonetypeService.findAll());
+		model.addAttribute("persons", businessDelegate.findAllPersons());
+		model.addAttribute("phonetypes", businessDelegate.findAllPhonenumbertypes());
 		return "benphone/update-benphone";
 	}
 
@@ -112,16 +108,16 @@ public class PersonPhoneControllerImpl implements PersonPhoneController{
 		if (action != null && !action.equals("Cancel")) {
 			if(bindingResult.hasErrors()) {
 				model.addAttribute("benphone", new Personphone());
-				model.addAttribute("persons", personService.findAll());
-				model.addAttribute("phonetypes", phonetypeService.findAll());
+				model.addAttribute("persons", businessDelegate.findAllPersons());
+				model.addAttribute("phonetypes", businessDelegate.findAllPhonenumbertypes());
 				return "benphone/update-benphone";
 			}
 			PersonphonePK id = new PersonphonePK();
 			id.setBusinessentityid((int) benphone.getPerson().getBusinessentityid()); id.setPhonenumbertypeid((int) benphone.getPhonenumbertype().getPhonenumbertypeid()); 
 			id.setPhonenumber("3291057293");
 			benphone.setId(id);
-			benphoneService.updatePersonPhone(benphone);
-			model.addAttribute("benphones", benphoneService.findAll());
+			businessDelegate.editPersonphone(benphone);
+			model.addAttribute("benphones", businessDelegate.findAllPersonphones());
 		}
 		return "redirect:/benphone/";
 	}

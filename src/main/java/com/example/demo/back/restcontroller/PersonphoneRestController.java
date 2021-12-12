@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.back.daos.PersonPhoneDao;
+import com.example.demo.back.service.interfaces.PersonPhoneService;
 import com.example.demo.front.model.person.Personphone;
 import com.example.demo.front.model.person.PersonphonePK;
 
@@ -23,44 +24,44 @@ import com.example.demo.front.model.person.PersonphonePK;
 public class PersonphoneRestController {
 
 	@Autowired
-	PersonPhoneDao personphoneDao;
+	PersonPhoneService personphoneService;
 	
 	@GetMapping
     public Iterable<Personphone> getPersonphones() {
-        return personphoneDao.getAll();
+        return personphoneService.findAll();
     }
 	
    @PostMapping
     public void addPersonphone(@RequestBody Personphone personphone) {
-        personphoneDao.save(personphone);
+	   personphoneService.savePersonPhone(personphone);
     }
 	
 	@PutMapping
     public void updatePersonphone(@RequestBody Personphone personphone) {
-		personphoneDao.update(personphone);
+		personphoneService.updatePersonPhone(personphone);
     }
 	
 	@GetMapping("/{id1}&{id2}")
     public Personphone getById(@PathVariable("id1") Integer id1, @PathVariable("id2") Integer id2) {
 		PersonphonePK id = new PersonphonePK();
 		id.setBusinessentityid(id1); id.setPhonenumbertypeid(id2); id.setPhonenumber("3291057293");
-        return personphoneDao.get(id).orElseThrow(() -> new IllegalArgumentException("Invalid id"));
+        return personphoneService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid id"));
     }
 	
 	@DeleteMapping("/{id1}&{id2}")
     public void delete(@PathVariable("id1") Integer id1, @PathVariable("id2") Integer id2) {
 		PersonphonePK id = new PersonphonePK();
 		id.setBusinessentityid(id1); id.setPhonenumbertypeid(id2); id.setPhonenumber("3291057293");
-        personphoneDao.deleteById(id);
+		personphoneService.delete(id);
     }
 	
 	@GetMapping("/search/findAllByPerson")
-    public List<Personphone> getAllByStateProvince(@RequestParam("person") Integer person) {
-        return personphoneDao.findAllByPerson(person);
+    public List<Personphone> getAllByPerson(@RequestParam("person") Integer person) {
+        return (List<Personphone>) personphoneService.findAllByPerson(person);
     }
 	
 	@GetMapping("/search/findAllByPhoneNumberType")
-    public List<Personphone> getAllByModifieddate(@RequestParam("phonenumbertype") Integer phonenumbertype) {
-        return personphoneDao.findAllByPhonenumbertype(phonenumbertype);
+    public List<Personphone> getAllByPhonenumbertype(@RequestParam("phonenumbertype") Integer phonenumbertype) {
+        return (List<Personphone>) personphoneService.findAllByPhoneNumbertype(phonenumbertype);
     }
 }

@@ -12,7 +12,7 @@ public interface PhoneNumberTypeService {
 
 	public Optional<Phonenumbertype> findById(long id);
 	
-	public void delete(Phonenumbertype phonetype);
+	public void delete(Integer id);
 
 	public Phonenumbertype updatePhoneNumberType(Phonenumbertype phonetype);
 	

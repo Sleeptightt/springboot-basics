@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.demo.front.businessdelegate.interfaces.BusinessDelegate;
 import com.example.demo.front.controller.interfaces.PhoneNumberTypeController;
 import com.example.demo.front.model.person.Phonenumbertype;
 import com.example.demo.back.service.interfaces.PhoneNumberTypeService;
@@ -21,21 +22,21 @@ import com.example.demo.back.service.interfaces.PhoneNumberTypeService;
 @Controller
 public class PhoneNumberTypeControllerImpl implements PhoneNumberTypeController{
 	
-	private PhoneNumberTypeService phonetypeService;
+	@Autowired
+	private BusinessDelegate businessDelegate;
 	
 	@Autowired
-	public PhoneNumberTypeControllerImpl(PhoneNumberTypeService phonetypeService) {
-		this.phonetypeService = phonetypeService;
+	public PhoneNumberTypeControllerImpl() {
 	}
 
 	@Override
 	@GetMapping("/phonetype/")
 	public String indexPhoneNumberType(@RequestParam(required = false, value = "id") Long id, Model model) {
 		if(id == null) {
-			model.addAttribute("phonetypes", phonetypeService.findAll());
+			model.addAttribute("phonetypes", businessDelegate.findAllPhonenumbertypes());
 		}else {
 			List<Phonenumbertype> phonetypes = new ArrayList<>();
-			phonetypes.add(phonetypeService.findById(id).get());
+			phonetypes.add(businessDelegate.findPhonenumbertypeById(id.intValue()));
 			model.addAttribute("phonetypes", phonetypes);
 		}
 		return "phonetype/index";
@@ -56,7 +57,7 @@ public class PhoneNumberTypeControllerImpl implements PhoneNumberTypeController{
 				model.addAttribute("phonetype", phonetype);
 				return "phonetype/add-phonetype";
 			}
-			phonetypeService.savePhoneNumberType(phonetype);
+			businessDelegate.savePhonenumbertype(phonetype);
 		}
 		return "redirect:/phonetype/";
 	}
@@ -64,16 +65,16 @@ public class PhoneNumberTypeControllerImpl implements PhoneNumberTypeController{
 	@Override
 	@GetMapping("/phonetype/del/{id}")
 	public String deletePhoneNumberType(@PathVariable("id") long id, Model model) {
-		Phonenumbertype phonetype = phonetypeService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-		phonetypeService.delete(phonetype);
-		model.addAttribute("phonetypes", phonetypeService.findAll());
+		Phonenumbertype phonetype = businessDelegate.findPhonenumbertypeById((int)id);
+		businessDelegate.deletePhonenumbertype(phonetype);
+		model.addAttribute("phonetypes", businessDelegate.findAllPhonenumbertypes());
 		return "phonetype/index";
 	}
 
 	@Override
 	@GetMapping("/phonetype/edit/{id}")
 	public String showUpdateForm(@PathVariable("id") long id, Model model) {
-		Phonenumbertype phonetype = phonetypeService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+		Phonenumbertype phonetype = businessDelegate.findPhonenumbertypeById((int)id);
 		model.addAttribute("phonetype", phonetype);
 		return "phonetype/update-phonetype";
 	}
@@ -87,8 +88,8 @@ public class PhoneNumberTypeControllerImpl implements PhoneNumberTypeController{
 				model.addAttribute("phonetype", phonetype);
 				return "phonetype/update-phonetype";		
 			}
-			phonetypeService.updatePhoneNumberType(phonetype);
-			model.addAttribute("phonetypes", phonetypeService.findAll());
+			businessDelegate.editPhonenumbertype(phonetype);
+			model.addAttribute("phonetypes", businessDelegate.findAllPhonenumbertypes());
 		}
 		return "redirect:/phonetype/";
 	}

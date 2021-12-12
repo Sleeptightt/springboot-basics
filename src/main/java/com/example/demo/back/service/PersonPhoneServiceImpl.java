@@ -40,20 +40,17 @@ public class PersonPhoneServiceImpl implements PersonPhoneService{
 		this.businessEntityRepository = businessEntityRepository;
 	}
 
-	@Transactional
 	public Personphone savePersonPhone(Personphone personPhone) {
 		
 		if(personPhone == null || personPhone.getId() == null 
 				|| personPhone.getPerson() == null || personPhone.getPerson().getBusinessentityid() == null 
-				|| personPhone.getPhonenumbertype() == null || personPhone.getPhonenumbertype().getPhonenumbertypeid() == null 
-				|| personPhone.getPerson().getBusinessentity() == null || personPhone.getPerson().getBusinessentity().getBusinessentityid() == null)
+				|| personPhone.getPhonenumbertype() == null || personPhone.getPhonenumbertype().getPhonenumbertypeid() == null )
 		return null;
 		
-		Integer personid = personPhone.getPerson().getBusinessentityid();
-		Integer businessEntityid = personPhone.getPerson().getBusinessentity().getBusinessentityid();
+		Integer businessEntityid = personPhone.getPerson().getBusinessentityid();
 		Integer phoneNumberTypeid = personPhone.getPhonenumbertype().getPhonenumbertypeid();
-		
-		if(!personDao.findById(personid).isPresent() || !businessEntityRepository.existsById(businessEntityid) || !phoneNumberTypeRepository.existsById(phoneNumberTypeid))
+
+		if(!personDao.findById(businessEntityid).isPresent() || !businessEntityRepository.existsById(businessEntityid) || !phoneNumberTypeRepository.existsById(phoneNumberTypeid))
 			return null;
 		personPhoneDao.save(personPhone);
 		return personPhone;
@@ -92,18 +89,18 @@ public class PersonPhoneServiceImpl implements PersonPhoneService{
 	}
 
 	@Override
-	public void delete(Personphone benphone) {
-		personPhoneDao.deleteById(benphone.getId());
+	public void delete(PersonphonePK id) {
+		personPhoneDao.deleteById(id);
 	}
 
 	@Override
-	public Iterable<Personphone> findAllByPerson(Person person) {
-		return personPhoneDao.findAllByPerson(person.getBusinessentityid());
+	public Iterable<Personphone> findAllByPerson(Integer personid) {
+		return personPhoneDao.findAllByPerson(personid);
 	}
 
 	@Override
-	public Iterable<Personphone> findAllByPhoneNumbertype(Phonenumbertype phonetype) {
-		return personPhoneDao.findAllByPhonenumbertype(phonetype.getPhonenumbertypeid());
+	public Iterable<Personphone> findAllByPhoneNumbertype(Integer phonenumbertypeid) {
+		return personPhoneDao.findAllByPhonenumbertype(phonenumbertypeid);
 	}
 
 }

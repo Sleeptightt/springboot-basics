@@ -10,40 +10,40 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.back.service.interfaces.BusinessEntityService;
+import com.example.demo.back.service.interfaces.PhoneNumberTypeService;
 import com.example.demo.back.service.interfaces.StateProvinceService;
-import com.example.demo.front.model.person.Businessentity;
+import com.example.demo.front.model.person.Phonenumbertype;
 import com.example.demo.front.model.person.Stateprovince;
 
 @RestController
-@RequestMapping("/api/stprov")
-public class StateprovinceRestController {
+@RequestMapping("/api/phonetype")
+public class PhonenumbertypeRestController {
 
 	@Autowired
-	private StateProvinceService stprovService;
+	private PhoneNumberTypeService phoneService;
 	
 	@GetMapping
-    public Iterable<Stateprovince> getStateProvinces() {
-        return stprovService.findAll();
+    public Iterable<Phonenumbertype> getPhonenumbertypes() {
+        return phoneService.findAll();
     }
 	
     @PostMapping
-    public void addStateprovince(@RequestBody Stateprovince stprov) {
-    	stprovService.saveStateprovince(stprov);
+    public void addPhonenumbertype(@RequestBody Phonenumbertype phone) {
+    	phoneService.savePhoneNumberType(phone);
     }
 	
 	@PutMapping
-    public void updateStateprovince(@RequestBody Stateprovince stprov) {
-		stprovService.updateStateprovince(stprov);
+    public void updatePhonenumbertype(@RequestBody Phonenumbertype phone) {
+		phoneService.updatePhoneNumberType(phone);
     }
 	
 	@GetMapping("/{id}")
-    public Stateprovince getById(@PathVariable("id") Integer id) {
-        return stprovService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid id"));
+    public Phonenumbertype getById(@PathVariable("id") Integer id) {
+        return phoneService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid id"));
     }
 	
 	@DeleteMapping("/{id}")
     public void delete(@PathVariable("id") Integer id) {
-        stprovService.delete(id);
+        phoneService.delete(id);
     }
 }

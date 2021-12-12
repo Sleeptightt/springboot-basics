@@ -12,6 +12,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * The persistent class for the phonenumbertype database table.
  *
@@ -31,6 +33,7 @@ public class Phonenumbertype implements Serializable {
 	private String name;
 
 	// bi-directional many-to-one association to Personphone
+	@JsonIgnore
 	@OneToMany(mappedBy = "phonenumbertype")
 	private List<Personphone> personphones;
 

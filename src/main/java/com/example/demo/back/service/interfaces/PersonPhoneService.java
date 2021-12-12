@@ -15,13 +15,13 @@ public interface PersonPhoneService {
 
 	public Optional<Personphone> findById(PersonphonePK id);
 	
-	public void delete(Personphone benphone);
+	public void delete(PersonphonePK id);
 
 	public Personphone updatePersonPhone(Personphone benphone);
 	
-	public Iterable<Personphone> findAllByPerson(Person person);
+	public Iterable<Personphone> findAllByPerson(Integer person);
 	
-	public Iterable<Personphone> findAllByPhoneNumbertype(Phonenumbertype phonetype);
+	public Iterable<Personphone> findAllByPhoneNumbertype(Integer phonenumbertype);
 	
 	
 	

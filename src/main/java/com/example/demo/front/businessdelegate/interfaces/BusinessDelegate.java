@@ -48,6 +48,14 @@ public interface BusinessDelegate {
     Address saveAddress(Address addr);
     void editAddress(Address addr);
     
+    //PHONE NUMBER TYPE
+	
+    List<Phonenumbertype> findAllPhonenumbertypes();
+    Phonenumbertype findPhonenumbertypeById(Integer id);
+    void deletePhonenumbertype(Phonenumbertype phone);
+    Phonenumbertype savePhonenumbertype(Phonenumbertype phone);
+    void editPhonenumbertype(Phonenumbertype phone);
+    
     //PERSONPHONE
 	
     List<Personphone> findAllPersonphonesByPhonenumbertype(Integer phonenumbertype);

@@ -54,8 +54,8 @@ public class PhoneNumberTypeServiceImpl implements PhoneNumberTypeService{
 	}
 
 	@Override
-	public void delete(Phonenumbertype phonetype) {
-		phoneNumberTypeRepository.delete(phonetype);
+	public void delete(Integer id) {
+		phoneNumberTypeRepository.deleteById(id);
 	}
 
 }
