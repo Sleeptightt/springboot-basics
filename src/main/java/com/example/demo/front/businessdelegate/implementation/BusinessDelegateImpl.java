@@ -26,6 +26,7 @@ import com.example.demo.front.model.person.Personphone;
 import com.example.demo.front.model.person.PersonphonePK;
 import com.example.demo.front.model.person.Phonenumbertype;
 import com.example.demo.front.model.person.Stateprovince;
+import com.example.demo.front.model.sales.Store;
 
 @Component
 public class BusinessDelegateImpl implements BusinessDelegate{
@@ -40,6 +41,7 @@ public class BusinessDelegateImpl implements BusinessDelegate{
     private final static String PHONE_TYPE_URL = URL + "/phonetype/";
     private final static String ADDR_TYPE_URL = URL + "/addrtype/";
     private final static String BEN_ADDR_URL = URL + "/benaddr/";
+    private final static String STORE_URL = URL + "/store/";
 	
 	private RestTemplate restTemplate;
 	
@@ -365,6 +367,36 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	@Override
 	public void editBusinessentityaddress(Businessentityaddress benaddr) {
 		restTemplate.put(BEN_ADDR_URL, benaddr, Businessentityaddress.class);
+	}
+
+	//Store --------------------------------------------------------------------------------------------
+	
+	@Override
+	public List<Store> findAllStores() {
+		Store[] array = restTemplate.getForObject(STORE_URL, Store[].class);
+		
+		return Arrays.asList(array);
+	}
+
+	@Override
+	public Store findStoreById(Integer id) {
+		return restTemplate.getForObject(STORE_URL+id, Store.class);
+	}
+
+	@Override
+	public void deleteStore(Store store) {
+		restTemplate.delete(STORE_URL+store.getBusinessentityid());
+	}
+
+	@Override
+	public Store saveStore(Store store) {
+		HttpEntity<Store> request = new HttpEntity<>(store);
+        return restTemplate.postForObject(STORE_URL, request, Store.class);
+	}
+
+	@Override
+	public void editStore(Store store) {
+		restTemplate.put(STORE_URL, store, Store.class);
 	}
 
 	

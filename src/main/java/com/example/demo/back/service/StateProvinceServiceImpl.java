@@ -22,12 +22,6 @@ public class StateProvinceServiceImpl implements StateProvinceService{
 		this.stateProvinceRepository = stateProvinceRepository;
 	}
 	
-	public Stateprovince saveStateProvince(Stateprovince stateProvince) {
-		if(stateProvince == null)
-			return null;
-		return stateProvinceRepository.save(stateProvince);
-	}
-	
 	@Transactional
 	public Stateprovince updateStateprovince(Stateprovince stateProvince) {
 		if(stateProvince == null)

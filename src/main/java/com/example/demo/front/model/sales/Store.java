@@ -12,9 +12,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
 import com.example.demo.back.model.sales.Salesperson;
+import com.example.demo.front.model.person.Businessentity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * The persistent class for the store database table.
@@ -26,8 +29,8 @@ public class Store implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name = "STORE_BUSINESSENTITYID_GENERATOR", allocationSize = 1, sequenceName = "STORE_SEQ")
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "STORE_BUSINESSENTITYID_GENERATOR")
+//	@SequenceGenerator(name = "STORE_BUSINESSENTITYID_GENERATOR", allocationSize = 1, sequenceName = "STORE_SEQ")
+//	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "STORE_BUSINESSENTITYID_GENERATOR")
 	private Integer businessentityid;
 
 	private String demographics;
@@ -39,6 +42,7 @@ public class Store implements Serializable {
 	private Integer rowguid;
 
 	// bi-directional many-to-one association to Customer
+	@JsonIgnore
 	@OneToMany(mappedBy = "store")
 	private List<Customer> customers;
 
@@ -118,6 +122,6 @@ public class Store implements Serializable {
 
 	public void setSalesperson(Salesperson salesperson) {
 		this.salesperson = salesperson;
-	}
+	}	
 
 }

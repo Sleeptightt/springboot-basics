@@ -18,6 +18,7 @@ import javax.persistence.TemporalType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.example.demo.back.model.person.Businessentitycontact;
+import com.example.demo.front.model.sales.Store;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
@@ -167,4 +168,6 @@ public class Businessentity implements Serializable {
 		this.details = details;
 	}
 
+	
+	
 }

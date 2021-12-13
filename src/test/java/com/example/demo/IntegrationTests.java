@@ -230,7 +230,7 @@ class IntegrationTests {
 		stateProvince.setRowguid(0);
 		stateProvince.setModifieddate(Timestamp.from(Instant.now()));
 		stateProvince.setIsonlystateprovinceflag("flag");
-		stateProvinceId = stateProvinceService.saveStateProvince(stateProvince);
+		stateProvinceId = stateProvinceService.saveStateprovince(stateProvince);
 	}
 	
 	public void editAddressStage() {

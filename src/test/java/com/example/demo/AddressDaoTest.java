@@ -40,6 +40,7 @@ import com.example.demo.back.daos.AddressDao;
 import com.example.demo.front.model.person.Address;
 import com.example.demo.front.model.person.Stateprovince;
 import com.example.demo.back.service.StateProvinceServiceImpl;
+import com.example.demo.back.service.interfaces.StateProvinceService;
 
 import lombok.extern.java.Log;
 
@@ -53,7 +54,7 @@ public class AddressDaoTest {
 	
 	private Address addr;
 	
-	private StateProvinceServiceImpl stateProvinceService;
+	private StateProvinceService stateProvinceService;
 	
 	private Stateprovince stprov;
 	
@@ -72,7 +73,7 @@ public class AddressDaoTest {
 		stprov.setRowguid(0);
 		stprov.setModifieddate(Timestamp.from(Instant.now()));
 		stprov.setIsonlystateprovinceflag("flag");
-		stateProvinceService.saveStateProvince(stprov);
+		stateProvinceService.saveStateprovince(stprov);
 	}
 	
 	public void updateAddressStage() {
@@ -139,7 +140,7 @@ public class AddressDaoTest {
 		stprov.setRowguid(0);
 		stprov.setModifieddate(Timestamp.from(Instant.now()));
 		stprov.setIsonlystateprovinceflag("flag");
-		stateProvinceService.saveStateProvince(stprov);
+		stateProvinceService.saveStateprovince(stprov);
 		
 		addr = new Address();
 		
@@ -218,7 +219,7 @@ public class AddressDaoTest {
 		stprov.setRowguid(0);
 		stprov.setModifieddate(Timestamp.from(Instant.now()));
 		stprov.setIsonlystateprovinceflag("flag");
-		stateProvinceService.saveStateProvince(stprov);
+		stateProvinceService.saveStateprovince(stprov);
 		
 		addr = new Address();
 		
@@ -240,7 +241,7 @@ public class AddressDaoTest {
 		stprov.setRowguid(0);
 		stprov.setModifieddate(Timestamp.from(Instant.now()));
 		stprov.setIsonlystateprovinceflag("flag");
-		stateProvinceService.saveStateProvince(stprov);
+		stateProvinceService.saveStateprovince(stprov);
 		
 		addr = new Address();
 		
@@ -262,7 +263,7 @@ public class AddressDaoTest {
 		stprov.setRowguid(0);
 		stprov.setModifieddate(Timestamp.from(Instant.now()));
 		stprov.setIsonlystateprovinceflag("flag");
-		stateProvinceService.saveStateProvince(stprov);
+		stateProvinceService.saveStateprovince(stprov);
 		
 		addr = new Address();
 		

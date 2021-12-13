@@ -93,7 +93,7 @@ public class BusinessEntityAddressDaoTest {
 		stprov.setRowguid(0);
 		stprov.setModifieddate(Timestamp.from(Instant.now()));
 		stprov.setIsonlystateprovinceflag("flag");
-		stateProvinceService.saveStateProvince(stprov);
+		stateProvinceService.saveStateprovince(stprov);
 		
 		addr = new Address();
 		addr.setStateprovince(stprov);
@@ -230,7 +230,7 @@ public class BusinessEntityAddressDaoTest {
 		stprov.setRowguid(0);
 		stprov.setModifieddate(Timestamp.from(Instant.now()));
 		stprov.setIsonlystateprovinceflag("flag");
-		stateProvinceService.saveStateProvince(stprov);
+		stateProvinceService.saveStateprovince(stprov);
 		
 		addr = new Address();
 		addr.setStateprovince(stprov);

@@ -8,6 +8,7 @@ import javax.persistence.Query;
 import org.springframework.web.client.RestTemplate;
 
 import com.example.demo.front.model.person.*;
+import com.example.demo.front.model.sales.*;
 
 public interface BusinessDelegate {
 	
@@ -86,4 +87,12 @@ public interface BusinessDelegate {
     void deleteBusinessentityaddress(Businessentityaddress benaddr);
     Businessentityaddress saveBusinessentityaddress(Businessentityaddress benaddr);
     void editBusinessentityaddress(Businessentityaddress benaddr);
+    
+    //STORE
+	
+    List<Store> findAllStores();
+    Store findStoreById(Integer id);
+    void deleteStore(Store store);
+    Store saveStore(Store store);
+    void editStore(Store store);
 }
