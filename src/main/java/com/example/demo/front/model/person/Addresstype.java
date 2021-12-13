@@ -12,6 +12,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * The persistent class for the addresstype database table.
  *
@@ -33,6 +35,7 @@ public class Addresstype implements Serializable {
 	private Integer rowguid;
 
 	// bi-directional many-to-one association to Businessentityaddress
+	@JsonIgnore
 	@OneToMany(mappedBy = "addresstype")
 	private List<Businessentityaddress> businessentityaddresses;
 

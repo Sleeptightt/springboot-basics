@@ -3,6 +3,8 @@ package com.example.demo.front.businessdelegate.interfaces;
 import java.sql.Timestamp;
 import java.util.List;
 
+import javax.persistence.Query;
+
 import org.springframework.web.client.RestTemplate;
 
 import com.example.demo.front.model.person.*;
@@ -73,4 +75,15 @@ public interface BusinessDelegate {
     void deletePersonphone(Personphone personphone);
     Personphone savePersonphone(Personphone personphone);
     void editPersonphone(Personphone personphone);
+    
+    //BUSINESSENTITYADDRESS
+	
+    List<Businessentityaddress> findAllBusinessentityaddressByAddress(Integer address);
+    List<Businessentityaddress> findAllBusinessentityaddressByAddresstype(Integer addresstype);
+    List<Businessentityaddress> findAllBusinessentityaddressByBusinessentity(Integer businessentity);
+    List<Businessentityaddress> findAllBusinessentityaddress();
+    Businessentityaddress findBusinessentityaddressById(BusinessentityaddressPK id);
+    void deleteBusinessentityaddress(Businessentityaddress benaddr);
+    Businessentityaddress saveBusinessentityaddress(Businessentityaddress benaddr);
+    void editBusinessentityaddress(Businessentityaddress benaddr);
 }

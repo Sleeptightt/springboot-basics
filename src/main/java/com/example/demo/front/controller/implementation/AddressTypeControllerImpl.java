@@ -22,9 +22,9 @@ import com.example.demo.back.service.interfaces.AddressTypeService;
 @Controller
 public class AddressTypeControllerImpl implements AddressTypeController{
 
+	@Autowired
 	private BusinessDelegate businessDelegate;
 	
-	@Autowired
 	public AddressTypeControllerImpl() {
 	}
 

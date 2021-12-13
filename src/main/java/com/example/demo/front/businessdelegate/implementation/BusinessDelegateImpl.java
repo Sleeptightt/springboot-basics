@@ -19,6 +19,8 @@ import com.example.demo.front.businessdelegate.interfaces.BusinessDelegate;
 import com.example.demo.front.model.person.Address;
 import com.example.demo.front.model.person.Addresstype;
 import com.example.demo.front.model.person.Businessentity;
+import com.example.demo.front.model.person.Businessentityaddress;
+import com.example.demo.front.model.person.BusinessentityaddressPK;
 import com.example.demo.front.model.person.Person;
 import com.example.demo.front.model.person.Personphone;
 import com.example.demo.front.model.person.PersonphonePK;
@@ -37,6 +39,7 @@ public class BusinessDelegateImpl implements BusinessDelegate{
     private final static String PHONE_URL = URL + "/benphone/";
     private final static String PHONE_TYPE_URL = URL + "/phonetype/";
     private final static String ADDR_TYPE_URL = URL + "/addrtype/";
+    private final static String BEN_ADDR_URL = URL + "/benaddr/";
 	
 	private RestTemplate restTemplate;
 	
@@ -311,6 +314,57 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	@Override
 	public void editPersonphone(Personphone personphone) {
 		restTemplate.put(PHONE_URL, personphone, Personphone.class);
+	}
+
+	//Businessentityadress --------------------------------------------------------------------------------------------
+	
+	@Override
+	public List<Businessentityaddress> findAllBusinessentityaddressByAddress(Integer address) {
+		Businessentityaddress[] array = restTemplate.getForObject(BEN_ADDR_URL+
+                "search/findAllByAddress?address=" + address, Businessentityaddress[].class);
+        return Arrays.asList(array);
+	}
+
+	@Override
+	public List<Businessentityaddress> findAllBusinessentityaddressByAddresstype(Integer addresstype) {
+		Businessentityaddress[] array = restTemplate.getForObject(BEN_ADDR_URL+
+                "search/findAllByAddresstype?addresstype=" + addresstype, Businessentityaddress[].class);
+        return Arrays.asList(array);
+	}
+
+	@Override
+	public List<Businessentityaddress> findAllBusinessentityaddressByBusinessentity(Integer businessentity) {
+		Businessentityaddress[] array = restTemplate.getForObject(BEN_ADDR_URL+
+                "search/findAllByBusinessentity?businessentity=" + businessentity, Businessentityaddress[].class);
+        return Arrays.asList(array);
+	}
+
+	@Override
+	public List<Businessentityaddress> findAllBusinessentityaddress() {
+		Businessentityaddress[] array = restTemplate.getForObject(BEN_ADDR_URL, Businessentityaddress[].class);
+		
+		return Arrays.asList(array);
+	}
+
+	@Override
+	public Businessentityaddress findBusinessentityaddressById(BusinessentityaddressPK id) {
+		return restTemplate.getForObject(BEN_ADDR_URL+id.getAddressid()+"&"+id.getAddresstypeid()+"&"+id.getBusinessentityid(), Businessentityaddress.class);
+	}
+
+	@Override
+	public void deleteBusinessentityaddress(Businessentityaddress benaddr) {
+		restTemplate.delete(BEN_ADDR_URL+benaddr.getId().getAddressid()+"&"+benaddr.getId().getAddresstypeid()+"&"+benaddr.getId().getBusinessentityid());
+	}
+
+	@Override
+	public Businessentityaddress saveBusinessentityaddress(Businessentityaddress benaddr) {
+		HttpEntity<Businessentityaddress> request = new HttpEntity<>(benaddr);
+        return restTemplate.postForObject(BEN_ADDR_URL, request, Businessentityaddress.class);
+	}
+
+	@Override
+	public void editBusinessentityaddress(Businessentityaddress benaddr) {
+		restTemplate.put(BEN_ADDR_URL, benaddr, Businessentityaddress.class);
 	}
 
 	

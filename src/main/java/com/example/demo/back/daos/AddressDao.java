@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.front.model.person.Address;
 import com.example.demo.front.model.person.Stateprovince;
 
-@Repository
+@Repository("AddressDao")
 @Scope("singleton")
 public class AddressDao implements Dao<Address,Integer>{
 

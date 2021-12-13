@@ -88,23 +88,23 @@ public class BusinessEntityAddressServiceImpl implements BusinessEntityAddressSe
 	}
 
 	@Override
-	public void delete(Businessentityaddress benaddr) {
-		businessEntityAddressDao.deleteById(benaddr.getId());
+	public void delete(BusinessentityaddressPK id) {
+		businessEntityAddressDao.deleteById(id);
 	}
 
 	@Override
-	public Iterable<Businessentityaddress> findAllByAddress(Address addr) {
-		return businessEntityAddressDao.findAllByAddress(addr);
+	public Iterable<Businessentityaddress> findAllByAddress(Integer addressid) {
+		return businessEntityAddressDao.findAllByAddress(addressid);
 	}
 
 	@Override
-	public Iterable<Businessentityaddress> findAllByAddresstype(Addresstype addrtype) {
-		return businessEntityAddressDao.findAllByAddresstype(addrtype);
+	public Iterable<Businessentityaddress> findAllByAddresstype(Integer addresstypeid) {
+		return businessEntityAddressDao.findAllByAddresstype(addresstypeid);
 	}
 
 	@Override
-	public Iterable<Businessentityaddress> findAllByBusinessentity(Businessentity ben) {
-		return businessEntityAddressDao.findAllByBusinessentity(ben);
+	public Iterable<Businessentityaddress> findAllByBusinessentity(Integer businessentityid) {
+		return businessEntityAddressDao.findAllByBusinessentity(businessentityid);
 	}
 
 	

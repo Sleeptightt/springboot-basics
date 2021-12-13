@@ -86,21 +86,21 @@ public class BusinessEntityAddressDao implements Dao<Businessentityaddress, Busi
 		return query.getResultList();
 	}
 
-	public Iterable<Businessentityaddress> findAllByAddress(Address addr) {
+	public Iterable<Businessentityaddress> findAllByAddress(Integer addressid) {
 		Query query = entityManager.createQuery("SELECT benaddr FROM Businessentityaddress benaddr WHERE benaddr.address.addressid = :addrid");
-		query.setParameter("addrid", addr.getAddressid());
+		query.setParameter("addrid", addressid);
 		return query.getResultList();
 	}
 
-	public Iterable<Businessentityaddress> findAllByAddresstype(Addresstype addrtype) {
+	public Iterable<Businessentityaddress> findAllByAddresstype(Integer addresstypeid) {
 		Query query = entityManager.createQuery("SELECT benaddr FROM Businessentityaddress benaddr WHERE benaddr.addresstype.addresstypeid = :addrtypeid");
-		query.setParameter("addrtypeid", addrtype.getAddresstypeid());
+		query.setParameter("addrtypeid", addresstypeid);
 		return query.getResultList();
 	}
 
-	public Iterable<Businessentityaddress> findAllByBusinessentity(Businessentity ben) {
+	public Iterable<Businessentityaddress> findAllByBusinessentity(Integer businessentityid) {
 		Query query = entityManager.createQuery("SELECT benaddr FROM Businessentityaddress benaddr WHERE benaddr.businessentity.businessentityid = :benid");
-		query.setParameter("benid", ben.getBusinessentityid());
+		query.setParameter("benid", businessentityid);
 		return query.getResultList();
 	}
 	

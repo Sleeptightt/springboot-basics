@@ -48,13 +48,9 @@ public class Taller1Application {
 				UserApp u = new UserApp(1,"sleep","{noop}123", UserType.ADMINISTRATOR);
 				UserApp u2 = new UserApp(2,"slee","{noop}123", UserType.OPERATOR);
 				userService.save(u); userService.save(u2);
-				Businessentity ben = new Businessentity();
-				ben = benService.saveBusinessEntity(ben);
 				Person p = new Person();
 				p.setFirstname("Cesar"); p.setMiddlename("Leonardo"); p.setLastname("Canales"); p.setAdditionalcontactinfo("cesarcanales80@gmail.com"); p.setTitle("Ing");
-				p.setBusinessentity(ben); 
 				p = personService.savePerson(p);
-				log.info((ben.getPerson() == null) + "");
 				Stateprovince stprov = new Stateprovince();
 				stprov.setName("Cali"); stprov.setStateprovincecode("CAL"); stprov.setTerritoryid(12);
 				stprov = stprovService.saveStateprovince(stprov);

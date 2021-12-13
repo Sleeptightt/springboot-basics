@@ -16,14 +16,14 @@ public interface BusinessEntityAddressService {
 
 	public Optional<Businessentityaddress> findById(BusinessentityaddressPK id);
 	
-	public void delete(Businessentityaddress benaddr);
+	public void delete(BusinessentityaddressPK id);
 
 	public Businessentityaddress updateBusinessEntityAddress(Businessentityaddress benaddr);
 	
-	public Iterable<Businessentityaddress> findAllByAddress(Address addr);
+	public Iterable<Businessentityaddress> findAllByAddress(Integer address);
 	
-	public Iterable<Businessentityaddress> findAllByAddresstype(Addresstype addrtype);
+	public Iterable<Businessentityaddress> findAllByAddresstype(Integer addresstype);
 	
-	public Iterable<Businessentityaddress> findAllByBusinessentity(Businessentity ben);
+	public Iterable<Businessentityaddress> findAllByBusinessentity(Integer businessentity);
 	
 }
