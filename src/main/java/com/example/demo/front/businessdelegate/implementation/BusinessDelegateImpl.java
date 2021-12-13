@@ -214,8 +214,8 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 	
 	@Override
 	public List<Addresstype> findAllAddresstypes() {
-		// TODO Auto-generated method stub
-		return null;
+		Addresstype [] array = restTemplate.getForObject(ADDR_TYPE_URL, Addresstype[].class);
+		return Arrays.asList(array);
 	}
 
 	@Override
