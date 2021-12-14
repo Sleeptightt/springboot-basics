@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Persons</title>
+<title>Customers</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
@@ -16,47 +16,35 @@
 <link rel="stylesheet" href="../css/shards.min.css">
 </head>
 <body>
-	<div th:switch="${persons.isEmpty()}" class="container my-5">
+	<div th:switch="${customers.isEmpty()}" class="container my-5">
 		<div class="row">
 			<div class="col-md-10">
-				<h2 th:case="true">No person has been registered yet!</h2>
+				<h2 th:case="true">No customer has been registered yet!</h2>
 				<div th:case="false">
-					<h2 class="my-5">Persons</h2>
+					<h2 class="my-5">Customers</h2>
 					<table class="table table-striped table-responsive-md">
 						<thead>
 							<tr>
-								<th>First Name</th>
-								<th>Middle Name</th>
-								<th>Last Name</th>
-								<th>Title</th>
-								<th>Additional Contact Information</th>
-								<th>Business Entity ID</th>
-								<th>Business Entity Contact</th>
-								<th>Clients</th>
+								<th>Person</th>
+								<th>Store</th>
 								<th>Edit</th>
 								<th>Delete</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="person : ${persons}">
-								<td th:text="${person.firstname}"></td>
-								<td th:text="${person.middlename}"></td>
-								<td th:text="${person.lastname}"></td>
-								<td th:text="${person.title}"></td>
-								<td th:text="${person.additionalcontactinfo}"></td>
-								<td><a th:text="${person.businessentityid}" th:href="@{/ben/?id={id}(id=${person.businessentityid})}"></a></td>
-								<td><a th:href="@{/benphone/?id1={id1}(id1=${person.businessentityid})}">Go to business entity phone numbers</a></td>
-								<td><a th:href="@{/customer/?id={id}(id=${person.businessentityid})}">Go to Clients</a></td>
-								<td><a th:href="@{/person/edit/{id}(id=${person.businessentityid})}"
+							<tr th:each="customer : ${customers}">
+								<td><a th:href="@{/person/?id={id}(id=${customer.personid})}">Go to person</a></td>
+								<td><a th:text="${customer.store.name}" th:href="@{/store/?id={id}(id=${customer.store.businessentityid})}"></a></td>
+								<td><a th:href="@{/customer/edit/{id}(id=${customer.customerid})}"
 									class="btn btn-primary"><i class="fas fa-calendar ml-2"></i></a></td>
-								<td><a th:href="@{/person/del/{id}(id=${person.businessentityid})}"
+								<td><a th:href="@{/customer/del/{id}(id=${customer.customerid})}"
 									class="btn btn-primary"><i class="fas fa-calendar-times ml-2"></i></a></td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 				<p class="my-5">
-					<a href="/person/add" class="btn btn-primary"><i
+					<a href="/customer/add" class="btn btn-primary"><i
 						class="fas fa-calendar-plus ml-2"></i></a>
 				</p>
 				

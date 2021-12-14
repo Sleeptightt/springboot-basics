@@ -16,6 +16,7 @@ import javax.persistence.SequenceGenerator;
 
 import com.example.demo.back.model.sales.Salesorderheader;
 import com.example.demo.back.model.sales.Salesterritory;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * The persistent class for the customer database table.
@@ -48,6 +49,7 @@ public class Customer implements Serializable {
 	private Store store;
 
 	// bi-directional many-to-one association to Salesorderheader
+	@JsonIgnore
 	@OneToMany(mappedBy = "customer")
 	private List<Salesorderheader> salesorderheaders;
 	

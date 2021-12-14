@@ -95,4 +95,13 @@ public interface BusinessDelegate {
     void deleteStore(Store store);
     Store saveStore(Store store);
     void editStore(Store store);
+    
+    //CUSTOMER
+	
+    List<Customer> findAllCustomersByPerson(Integer person);
+    List<Customer> findAllCustomers();
+    Customer findCustomerById(Integer id);
+    void deleteCustomer(Customer customer);
+    Customer saveCustomer(Customer customer);
+    void editCustomer(Customer customer);
 }

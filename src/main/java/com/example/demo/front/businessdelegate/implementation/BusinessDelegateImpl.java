@@ -26,6 +26,7 @@ import com.example.demo.front.model.person.Personphone;
 import com.example.demo.front.model.person.PersonphonePK;
 import com.example.demo.front.model.person.Phonenumbertype;
 import com.example.demo.front.model.person.Stateprovince;
+import com.example.demo.front.model.sales.Customer;
 import com.example.demo.front.model.sales.Store;
 
 @Component
@@ -42,6 +43,7 @@ public class BusinessDelegateImpl implements BusinessDelegate{
     private final static String ADDR_TYPE_URL = URL + "/addrtype/";
     private final static String BEN_ADDR_URL = URL + "/benaddr/";
     private final static String STORE_URL = URL + "/store/";
+    private final static String CUST_URL = URL + "/customer/";
 	
 	private RestTemplate restTemplate;
 	
@@ -399,14 +401,42 @@ public class BusinessDelegateImpl implements BusinessDelegate{
 		restTemplate.put(STORE_URL, store, Store.class);
 	}
 
+	//Customer --------------------------------------------------------------------------------------------
 	
-
+	@Override
+	public List<Customer> findAllCustomersByPerson(Integer person) {
+		Customer[] array = restTemplate.getForObject(CUST_URL+
+                "search/findAllByPerson?person=" + person, Customer[].class);
+        return Arrays.asList(array);
+	}
 	
+	@Override
+	public List<Customer> findAllCustomers() {
+		Customer[] array = restTemplate.getForObject(CUST_URL, Customer[].class);
+		
+		return Arrays.asList(array);
+	}
 
+	@Override
+	public Customer findCustomerById(Integer id) {
+		return restTemplate.getForObject(CUST_URL+id, Customer.class);
+	}
 
+	@Override
+	public void deleteCustomer(Customer customer) {
+		restTemplate.delete(CUST_URL+customer.getCustomerid());
+	}
 
-	
-	
+	@Override
+	public Customer saveCustomer(Customer customer) {
+		HttpEntity<Customer> request = new HttpEntity<>(customer);
+        return restTemplate.postForObject(CUST_URL, request, Customer.class);
+	}
+
+	@Override
+	public void editCustomer(Customer customer) {
+		restTemplate.put(CUST_URL, customer, Customer.class);
+	}
 
 	
 	
